@@ -2,12 +2,22 @@ package com.zecky_dev.passwordgenerator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,9 +29,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
     private EditText passLengthET,generatedPasswordET;
-    private CheckBox lowerCaseCB,upperCaseCB,numbersCB,specialCharsCB;
-    private ArrayList<Boolean> checkedCheckBoxes;
-
+    private String generatedPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +43,15 @@ public class MainActivity extends AppCompatActivity {
         String specialCharacters = " !\"#$%&'%()*+,-./:;<=>?@[\\]^_`{|}~";
         char[] specialChars_arr = specialCharacters.toCharArray();
         int[] numbers_arr = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-        checkedCheckBoxes = new ArrayList<>();
-        lowerCaseCB = findViewById(R.id.lowerCaseCB);
-        upperCaseCB = findViewById(R.id.upperCaseCB);
-        numbersCB = findViewById(R.id.numbersCB);
-        specialCharsCB = findViewById(R.id.specialCharactersCB);
+        ArrayList<Boolean> checkedCheckBoxes = new ArrayList<>();
+        CheckBox lowerCaseCB = findViewById(R.id.lowerCaseCB);
+        CheckBox upperCaseCB = findViewById(R.id.upperCaseCB);
+        CheckBox numbersCB = findViewById(R.id.numbersCB);
+        CheckBox specialCharsCB = findViewById(R.id.specialCharactersCB);
         passLengthET = findViewById(R.id.passwordLengthET);
         generatedPasswordET = findViewById(R.id.generatedPassET);
         Button generatePassBTN = findViewById(R.id.generatePassBTN);
+        Button copyPassBTN = findViewById(R.id.copyPasswordBTN);
         Random random = new Random();
         ArrayList<String> checkedBoxes = new ArrayList<>();
         checkedBoxes.add("lowerCase");
@@ -104,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     if(!passLengthET.getText().toString().isEmpty()){
                         int passLength,randomOption,randomIndex;
-                        String generatedPassword = "";
+                        generatedPassword = "";
                         passLength = Integer.parseInt(passLengthET.getText().toString());
                         for(int i=0;i<passLength;i++){
                             randomOption = random.nextInt(checkedBoxes.size());
@@ -135,7 +144,34 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        copyPassBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!generatedPasswordET.getText().toString().isEmpty()){
+                    ClipboardManager clipBoard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("generatedPassword",generatedPassword);
+                    clipBoard.setPrimaryClip(clip);
+                    Dialog dialog = new Dialog(MainActivity.this);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setCancelable(false);
+                    dialog.setContentView(R.layout.custom_alert_dialog);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    TextView dialogTW = dialog.findViewById(R.id.dialogTextTW);
+                    dialogTW.setText(generatedPassword + "\ncopied to clipboard!");
+                    dialog.findViewById(R.id.closeDialogBTN).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
+                }
+                else{
+                    Toast.makeText(MainActivity.this, "Firstly generate a password to copy!", Toast.LENGTH_SHORT).show();
+                }
 
+            }
+        });
 
 
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Password Generator By Zecky-Dev</string>
+    <string name="app_name">Password Generator</string>
     <string name="lower_case_checkbox_text">Lower case</string>
     <string name="upper_case_checkbox_text">Upper case</string>
     <string name="numbers_checkbox_text">Numbers</string>
@@ -8,4 +8,7 @@
     <string name="password_length_edittext_text">Password Length</string>
     <string name="generate_button_text">GENERATE</string>
     <string name="generated_password_text">Generated Password</string>
+    <string name="password_generator_app_title_text">Password Generator</string>
+    <string name="copy_to_clipboard_button_text">Copy generated password</string>
+    <string name="copied_to_clipboard_dialog_text">Copied to clipboard!</string>
 </resources>

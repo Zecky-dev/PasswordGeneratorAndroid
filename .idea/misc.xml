@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.25410872313527183" />
+        <entry key="app/src/main/res/drawable/copy_icon.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/generate_pass_icon.xml" value="0.258" />
         <entry key="app/src/main/res/drawable/rounded_corners.xml" value="0.178" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/custom_alert_dialog.xml" value="0.22" />
       </map>
     </option>
   </component>
